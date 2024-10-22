@@ -32,14 +32,17 @@ const userSchema = new Schema(
   }
 );
 
-// hash user password
+// hash user password with error handling
 userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
+  try {
+    if (this.isNew || this.isModified('password')) {
+      const saltRounds = 10;
+      this.password = await bcrypt.hash(this.password, saltRounds);
+    }
+    next(); // Proceed to the next middleware or save the document
+  } catch (err) {
+    next(err); // Pass the error to the next middleware for handling
   }
-
-  next();
 });
 
 // custom method to compare and validate password for logging in
