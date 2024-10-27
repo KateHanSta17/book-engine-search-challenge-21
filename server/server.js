@@ -1,5 +1,8 @@
+require('dotenv').config({ path: './server/.env' });
+
 const dotenv = require('dotenv').config();
 console.log(dotenv.error ? 'Error loading .env' : 'Loaded .env successfully');
+console.log("MONGODB_URI:", process.env.MONGODB_URI);
 
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
