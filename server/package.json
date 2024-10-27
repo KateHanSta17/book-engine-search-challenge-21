@@ -5,14 +5,15 @@
   "main": "server.js",
   "scripts": {
     "start": "cross-env JWT_SECRET=your_secret_key_here node server.js",
-    "watch": "nodemon server.js"
+    "watch": "nodemon server.js",
+    "postinstall": "npm rebuild bcrypt --build-from-source"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^3.13.0",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
     "graphql": "^16.9.0",
