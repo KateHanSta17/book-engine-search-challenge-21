@@ -1,6 +1,6 @@
-require('dotenv').config();
-console.log("ENV VARIABLES:", process.env);
-  
+const dotenv = require('dotenv').config();
+console.log(dotenv.error ? 'Error loading .env' : 'Loaded .env successfully');
+
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
