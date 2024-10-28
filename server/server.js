@@ -1,9 +1,5 @@
 require('dotenv').config({ path: './server/.env' });
 
-const dotenv = require('dotenv').config();
-console.log(dotenv.error ? 'Error loading .env' : 'Loaded .env successfully');
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
-
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
@@ -18,7 +14,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+  // Serve the static files from the Vite build (usually in 'dist')
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+
+  // Handle any other routes with the React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  });
 }
 
 // Apollo Server setup
@@ -28,7 +30,6 @@ const server = new ApolloServer({
   context: authMiddleware,
 });
 
-// Start the Apollo Server
 server.start().then(() => {
   server.applyMiddleware({ app });
 
