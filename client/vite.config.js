@@ -14,5 +14,8 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  build: {
+    outDir: 'dist'  // Ensure this is the output directory for the production build
   }
 })
